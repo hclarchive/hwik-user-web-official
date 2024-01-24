@@ -1,0 +1,28 @@
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout_no_bg}">
+
+<th:block layout:fragment="pageCss">
+</th:block>
+
+<th:block layout:fragment="content">
+    <div class="cont h-full mh-80vh">
+        <div class="cont_info">
+            <div class="info_wrap flex flex-col items-center">
+                <img class="mb-7 comming_img" th:src="@{/assets/images/comingsoon.png}" alt="wallet"/>
+                <div class="text_box">
+                    <p class="primary_tc mb-5">Coming Soon</p>
+                    <p class="nomal_tm">
+                        Trade services will be provided<br/>
+                        according to the roadmap</p><br/>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="pageScript">
+</th:block>
+
+</html>

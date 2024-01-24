@@ -1,0 +1,218 @@
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<th:block layout:fragment="pageCss">
+    <meta http-equiv="Content-Security-Policy" frame-src="https://telegram.org/">
+    <link th:href="@{/assets/vendor/flowbite/flowbite.min.css}" rel="stylesheet"/>
+</th:block>
+
+<th:block layout:fragment="content">
+    <div class="cont_outter">
+        <div class="cont_inner xl:h-full">
+            <div class="flex tit_row gap-2">
+                <h3 class="h-tit mb-8" th:text="${web3.title}">Join our community</h3>
+                <img class="tit_img mt-1" th:src="@{/assets/images/join_tit.png}"/>
+            </div>
+
+            <div class="quest_wrap grid xl:grid-cols-2 gap-5">
+                <th:block th:each="item, i: ${web3.children}">
+                    <div class="joc_box">
+                        <div class="flex sm:items-center items-start gap-5">
+                            <img class="sns_img" th:src="${item.imagePath}"/>
+                            <div class="flex flex-col sm:flex-row w-full sm:items-center justify-between">
+                                <div class="joc_tit">
+                                    <p th:text="${item.title}">title</p>
+                                </div>
+                                <th:block th:if="${item.remain >= 0}">
+                                    <th:block th:if="${item.isClaim}">
+                                        <div>
+                                            <div class="state mb-4">Completed</div>
+                                            <div class="flex items-center price_wrap gap-3">
+                                                <button class="action arrow" type="button"></button>
+                                                <div class="price">
+                                                    <span class="num" th:text="|+ ${item.reward}|">+ 1,000</span>
+                                                    <span class="unit">HWIK</span>
+                                                </div>
+                                                <img th:src="@{/assets/images/joc_gift01.png}"/>
+                                            </div>
+                                        </div>
+                                    </th:block>
+                                    <th:block th:unless="${item.isClaim}">
+                                        <th:block th:if="${item.isComplete}">
+                                            <div th:attr="data-claim=${item.id}, data-reward=${item.reward}" class="cursor-pointer">
+                                                <div class="state mb-4 primary">Claim</div>
+                                                <div class="flex items-center price_wrap gap-3">
+                                                    <button class="action arrow on" type="button"></button>
+                                                    <div class="price">
+                                                        <span class="num" th:text="|+ ${item.reward}|">+ 1,000</span>
+                                                        <span class="unit">HWIK</span>
+                                                    </div>
+                                                    <img th:src="@{/assets/images/joc_gift03.png}">
+                                                </div>
+                                            </div>
+                                        </th:block>
+                                        <th:block th:unless="${item.isComplete}">
+                                            <div th:attr="data-sns=${item.snsType}, data-extra=${item.extraData1}, data-popup=${item.id}" class="cursor-pointer">
+                                                <div class="state black mb-4">Get Reward</div>
+                                                <div class="flex items-center price_wrap gap-3">
+                                                    <div class="price">
+                                                        <span class="num" th:text="|+ ${item.reward}|">+ 1,000</span>
+                                                        <span class="unit">HWIK</span>
+                                                    </div>
+                                                    <img th:src="@{/assets/images/joc_gift02.png}">
+                                                </div>
+                                            </div>
+                                        </th:block>
+                                    </th:block>
+                                </th:block>
+                                <th:block th:unless="${item.remain >= 0}">
+                                    <div>
+                                        <div class="state mb-4"></div>
+                                        <div class="flex items-center price_wrap gap-3">
+                                            <button class="action arrow" type="button"></button>
+                                            <div class="price">
+                                                <span class="num" th:text="|+ ${item.reward}|">+ 1,000</span>
+                                                <span class="unit">HWIK</span>
+                                            </div>
+                                            <img th:src="@{/assets/images/joc_gift01.png}"/>
+                                        </div>
+                                    </div>
+                                </th:block>
+                            </div>
+                        </div>
+                        <div class="joc_bottom grid grid-cols-1 sm:grid-cols-2 mt-4 gap-y-2 gap-x-4">
+                            <div class="balance_rows flex items-center justify-between">
+                                <div class="">
+                                    <img th:src="@{/assets/images/balance_ico01.png}">
+
+                                </div>
+                                <div class="price_box">
+                                    <p class="joc_text">Total Reward amount</p>
+                                    <p class="joc_price" th:text="${#numbers.formatDecimal(item.totalReward, 1, 'COMMA', 2, 'POINT')}">1,000,000,000</p>
+                                </div>
+                            </div>
+                            <div class="balance_rows flex items-center justify-between">
+                                <div class="">
+                                    <img th:src="@{/assets/images/balance_ico01.png}">
+
+                                </div>
+                                <div class="price_box">
+                                    <p class="joc_text">Amount of Reward to provide</p>
+                                    <p class="joc_price" th:text="${#numbers.formatDecimal(item.provide, 1, 'COMMA', 2, 'POINT')}">999,500,000</p>
+                                </div>
+                            </div>
+                            <div class="balance_rows flex items-center justify-between">
+                                <div class="">
+                                    <img th:src="@{/assets/images/balance_ico01.png}">
+
+                                </div>
+                                <div class="price_box">
+                                    <p class="joc_text">Amount of Reward Remaining</p>
+                                    <p class="joc_price" th:text="${#numbers.formatDecimal(item.remain, 1, 'COMMA', 2, 'POINT')}">500,000</p>
+                                </div>
+                            </div>
+                            <div class="balance_rows flex items-center justify-between">
+                                <div class="">
+                                    <img th:src="@{/assets/images/joc_bottom01.png}">
+                                </div>
+                                <div class="price_box">
+                                    <p class="joc_text">Number of participants</p>
+                                    <p class="joc_price" th:text="${#numbers.formatInteger(item.participants, 0, 'COMMA')}">999,500</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+
+        <div id="claim_modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+             class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative w-full max-w-2xl max-h-full m-auto">
+                <div class="flex flex-col my-auto items-center">
+                    <!-- Modal content -->
+                    <div class="pop_bg">
+                        <div class="pop_tit">
+                            <p>Claim</p>
+                        </div>
+                        <div class="pop_body pop_body4">
+                            <img class="mb-5" th:src="@{/assets/images/layer_img03.png}">
+                            <p class="mb-12">You can get <span class="primary_tc" id="claim_modal_amount">1,000 HWIK.</span><br>
+                                Would you like to claim rewards?</p>
+                            <div class="btn_wrap flex flex-col sm:flex-row gap-2">
+                                <button class="btn_gray" type="button" id="claim_modal_no_btn">Cancel</button>
+                                <button class="btn_primary" type="button" id="claim_modal_yes_btn">Receive Reward</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="progress_modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+             class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="pop_bg">
+                <div class="pop_tit">
+                    <p>Claim in progress</p>
+                </div>
+                <div class="pop_body pop_body4">
+                    <img class="mb-5" th:src="@{/assets/images/layer_img04.gif}">
+                    <p class="mb-1 flex items-center" id="progress-modal-title">
+                    </p>
+                    <p class="font-semibold">Transaction in progress.<br>
+                        Please wait a moment.</p>
+                </div>
+            </div>
+        </div>
+        <div id="success_modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+             class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="pop_bg">
+                <div class="pop_tit">
+                    <p>Claim Confirmed</p>
+                </div>
+                <div class="pop_body pop_body4 ">
+                    <img class="mb-5" th:src="@{/assets/images/layer_img05.gif}">
+                    <p class="mb-12">Transaction Submitted<br>
+                        <a id="go_exeplorer" target="_blank">
+                            <span class="underline primary_tc">View on Wemix explorer</span>
+                        </a>
+                    </p>
+
+                    <div class="btn_wrap">
+                        <button class="btn_primary" type="button" id="success_modal_no_btn">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="fail_model" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+             class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="pop_bg">
+                <div class="pop_tit">
+                    <p>Failed</p>
+                </div>
+                <div class="pop_body pop_body4 ">
+                    <img class="mb-10" th:src="@{/assets/images/layer_img06.png}">
+                    <p class="mb-1">Transaction Failed</p>
+                    <p class="font-semibold mb-5">There may be a problem with the network situation.<br>
+                        Please try again in a few minutes.
+                    </p>
+                    <div class="btn_wrap">
+                        <button class="btn_primary" type="button" id="fail_modal_no_btn">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="pageScript">
+    <script src="https://telegram.org/js/telegram-widget.js?22"></script>
+    <script th:src="@{/assets/vendor/flowbite/flowbite.min.js}"></script>
+
+    <script th:src="@{/assets/js/pages/web3.js}"></script>
+
+</th:block>
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hwik Circle Layer Web3.0">
+    <meta name="author" content="Hwik Circle Layer">
+    <meta property="og:type" content="website">
+
+    <title>HwikCircleLayer</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <link th:href="@{/assets/css/style.css}" rel="stylesheet"/>
+
+    <script th:src="@{/assets/vendor/tailwindcss/3.3.3.js}"></script>
+    <script th:src="@{/assets/js/core.js}"></script>
+
+    <th:block layout:fragment="pageCss"></th:block>
+</head>
+
+<body>
+<canvas id="canvas"></canvas>
+<div class="buttonContainer" style="display: none">
+    <button class="canvasBtn" id="confettiStopButton">Stop Confetti</button>
+    <button class="canvasBtn" id="confettiStartButton">Drop Confetti</button>
+</div>
+
+<div id="wrap">
+    <div th:replace="~{fragment/leftbarFragment :: leftbarFragment}"></div>
+    <div id="cont_wrap">
+        <div th:replace="~{fragment/navFragment :: navFragment}"></div>
+
+        <div class="cont cont_bg">
+            <th:block layout:fragment="content"></th:block>
+        </div>
+
+        <div th:replace="~{fragment/footerFragment :: footerFragment}"></div>
+    </div>
+</div>
+
+<div th:replace="~{fragment/commonModalFragment :: commonModalFragment}"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/web3/4.1.2/web3.min.js"></script>
+<script th:src="@{/assets/vendor/flowbite/flowbite.min.js}"></script>
+<script th:src="@{/assets/vendor/moment/moment.js}"></script>
+<script th:src="@{/assets/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/assets/js/confetti_v2.js}"></script>
+
+<script th:inline="javascript">
+    var baseUrl = window.location.protocol + "//" + window.location.host;
+
+    /*<![CDATA[*/
+    var contextPath = /*[[@{/}]]*/ '/';
+    /*]]>*/
+
+    var chainId = /*[[@{${@thymeleafUtil.chainId()}}]]*/ 1;
+</script>
+
+<script th:src="@{/assets/js/site.js}"></script>
+
+<th:block layout:fragment="pageScript"></th:block>
+</body>
+
+</html>

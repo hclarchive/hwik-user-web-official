@@ -1,0 +1,28 @@
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout_no_bg}">
+
+<th:block layout:fragment="pageCss">
+</th:block>
+
+<th:block layout:fragment="content">
+    <div class="cont h-full mh-80vh">
+        <div class="cont_info">
+            <div class="info_wrap flex flex-col items-center">
+                <img class="mb-7 comming_img" th:src="@{/assets/images/back.png}" alt="wallet"/>
+                <div class="text_box">
+                    <p class="primary_tc mb-5">404</p>
+                    <p class="nomal_tm">
+                        Not Found
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="pageScript">
+</th:block>
+
+</html>

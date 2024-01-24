@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<div th:fragment="commonModalFragment" class="navbar flex justify-between lg:justify-end">
+    <div id="common_modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+         class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative w-full max-w-2xl max-h-full m-auto">
+            <div class="flex flex-col my-auto items-center">
+                <!-- Modal content -->
+                <div class="pop_bg">
+                    <div class="pop_tit">
+                        <p id="common_modal_title">Apply</p>
+                    </div>
+                    <div class="pop_body pop_body4">
+                        <img class="mb-5" th:src="@{/assets/images/layer_img03.png}">
+                        <div class="my-6">
+                            <p class="mb-1 flex items-center" id="common_modal_desc">
+                                Would you like to apply?
+                            </p>
+                        </div>
+                        <div class="btn_wrap flex flex-col sm:flex-row gap-2">
+                            <button class="btn_gray" type="button" id="common_modal_no_btn">Cancel</button>
+                            <button class="btn_primary" type="button" id="common_modal_yes_btn">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+

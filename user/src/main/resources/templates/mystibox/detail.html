@@ -1,0 +1,197 @@
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout_no_bg}">
+
+<th:block layout:fragment="pageCss">
+</th:block>
+
+<th:block layout:fragment="content">
+    <input type="hidden" id="tokenAddress" th:value="${tokenAddress}">
+    <input type="hidden" id="walletAddress" th:value="${walletAddress}">
+    <input type="hidden" id="id" th:value="${mystibox.id}">
+    <input type="hidden" id="amount" th:value="${mystibox.entryRequired}">
+
+    <div class="box_wrap flex justify-center mb-10">
+        <div class="cont_box">
+            <div class="top_nav">
+                <a th:href="@{/mysti}">
+                    <img th:src="@{/assets/images/topnav_back.png}" alt="back" class="top_back_btn">
+                </a>
+            </div>
+            <div class="coupon_box mb-5" th:style="|background: url('${mystibox.imagePath}') no-repeat; background-size: cover; background-position:center|">
+                <div class="text">
+                    <p class="coupon" th:text="${mystibox.title}">-</p>
+                </div>
+                <p class="period" th:text="${mystibox.startedAt} +' ~ ' + ${mystibox.endedAt}"></p>
+                <input type="hidden" id="startedAt" th:value="${mystibox.startedAt}"/>
+                <input type="hidden" id="endedAt" th:value="${mystibox.endedAt}"/>
+            </div>
+
+            <ul class="coupon_list mb-6">
+                <li>
+                    <span>Apply Amount</span>
+                    <span th:text="|${mystibox.entryRequired} HWIK|">0 HWIK</span>
+                </li>
+                <li>
+                    <span>Total Application</span>
+                    <span th:text="${mystibox.curEntryCount}">0</span>
+                </li>
+                <li th:if="${!#strings.isEmpty(mystibox.winnerAddress)}">
+                    <span>Winner</span>
+                    <span class="win" th:text="${mystibox.winnerAddress}">0x00</span>
+                </li>
+            </ul>
+            <th:block th:if="${#strings.equalsIgnoreCase(mystibox.status, 'Ing')}">
+                <button type="button" class="coupon_btn mb-6 tit_navy" id="applyBtn">Apply</button>
+            </th:block>
+            <th:block th:if="${#strings.equalsIgnoreCase(mystibox.status, 'Pending')}">
+                <button type="button" class="coupon_btn mb-6 tit_gray">Confirmation of winning</button>
+            </th:block>
+            <th:block th:if="${#strings.equalsIgnoreCase(mystibox.status, 'Ended')}">
+                <button type="button" class="coupon_btn mb-6 tit_gray">Ended</button>
+            </th:block>
+            <th:block th:unless="${#strings.equalsIgnoreCase(mystibox.status, 'Ended')}">
+                <form class="flex time mb-12">
+                    <div class="wt_box_wrap">
+                        <div class="wt_box day">
+                            <input type="text" class="wt_box rounded-tl-lg rounded-bl-lg" id="reaminDay" value="00">
+                        </div>
+                        <p>day</p>
+                    </div>
+                    <div class="wt_box_wrap">
+                        <div class="wt_box hour">
+                            <input type="text" class="wt_box" id="remainHour" value="00">
+                        </div>
+                        <p>Hour</p>
+                    </div>
+                    <div class="wt_box_wrap">
+                        <div class="wt_box min">
+                            <input type="text" class="wt_box" id="remainMin" value="00">
+                        </div>
+                        <p>Min</p>
+                    </div>
+                    <div class="wt_box_wrap">
+                        <div class="wt_box sec">
+                            <input type="text" class="wt_box rounded-tr-lg rounded-br-lg" id="remainSec" value="00">
+                        </div>
+                        <p>Sec</p>
+                    </div>
+                </form>
+            </th:block>
+
+            <div class="desc_text">
+                <div class="mb-6">
+                    <h5 class="desc_tit mb-1">Details</h5>
+                    <p class="desc_info">
+                        1. The winner of the first place winner be automatically awarded points on the app with a Taglo app(<a href="https://play.google.com/store/apps/details?id=com.hwikcarry.taglo" target="_blank">Android</a>, IOS) within 1 to 3 days of winning.<br>
+                        2. If the winning wallet address is not linked to the Taglo app(<a href="https://play.google.com/store/apps/details?id=com.hwikcarry.taglo" target="_blank">Android</a>, IOS) for two weeks after winning, no points will be paid.<br/>
+                        3. Except for the first place winner, all other winners will receive a small amount of Wemix.<br/>
+                        </p>
+                </div>
+                <div class="mb-6">
+                    <h5 class="desc_tit mb-1">How to apply</h5>
+                    <p class="desc_info">
+                        1. Click the [Apply] button to participate in MistyBox.<br/>
+                        2. After the MistyBox application period ends, winners will be drawn at random.<br/>
+                        3. Winners will receive the Tpoint after confirming their winnings (*winners not notified).<br/>
+                        4. Winners can use points with Taglo app(<a href="https://play.google.com/store/apps/details?id=com.hwikcarry.taglo" target="_blank">Android</a>, IOS)<br/>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--    modal-->
+    <div id="applyModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+         class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative w-full max-w-2xl max-h-full m-auto">
+            <div class="flex flex-col my-auto items-center">
+                <!-- Modal content -->
+                <div class="pop_bg">
+                    <div class="pop_tit">
+                        <p>Apply</p>
+                    </div>
+                    <div class="pop_body pop_body4">
+                        <img class="mb-5" th:src="@{/assets/images/layer_img08.png}">
+                        <p class="mb-1 flex items-center">
+                            Would you like to apply?
+                        </p>
+                        <p class="font-semibold mb-8" th:utext="|
+                            If you participate in one application,<br>
+                            ${mystibox.entryRequired}HWIK will be consumed. Currently,<br>
+                            the number of applications is ${mystibox.curEntryCount + 1}.</p>
+                        |">
+                        <div class="btn_wrap flex flex-col sm:flex-row gap-2">
+                            <button class="btn_gray" type="button" id="applyModal_cancel_btn">Cancel</button>
+                            <button class="btn_primary" type="button" id="applyModal_apply_btn">Apply</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="progressModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+         class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="pop_bg">
+            <div class="pop_tit">
+                <p>Apply in progress</p>
+                <!-- <img class="pop_close" src="./images/layer_close.png" alt="닫기" /> -->
+            </div>
+            <div class="pop_body pop_body4">
+                <img class="mb-5" th:src="@{/assets/images/layer_img04.gif}">
+                <p class="mb-1 flex items-center" th:text="${mystibox.title}">
+                </p>
+                <p class="font-semibold">Transaction in progress.<br>
+                    Please wait a moment.</p>
+            </div>
+        </div>
+    </div>
+    <div id="successModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+         class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="pop_bg">
+            <div class="pop_tit">
+                <p>Claim Confirmed</p>
+            </div>
+            <div class="pop_body pop_body4 ">
+                <img class="mb-5" th:src="@{/assets/images/layer_img05.png}">
+                <p class="mb-12">Transaction Submitted<br>
+                    <a id="goExeplorer" target="_blank">
+                        <span class="underline primary_tc">View on Wemix explorer</span>
+                    </a>
+                </p>
+
+                <div class="btn_wrap">
+                    <button class="btn_primary" type="button" id="successModal_close_btn">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="failModel" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+         class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="pop_bg">
+            <div class="pop_tit">
+                <p>Failed</p>
+            </div>
+            <div class="pop_body pop_body4 ">
+                <img class="mb-10" th:src="@{/assets/images/layer_img06.png}">
+                <p class="mb-1">Transaction Failed</p>
+                <p class="font-semibold mb-5">There may be a problem with the network situation.<br>
+                    Please try again in a few minutes.
+                </p>
+
+                <div class="btn_wrap">
+                    <button class="btn_primary" type="button" id="failModel_close_btn">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+<th:block layout:fragment="pageScript">
+    <script th:src="@{/assets/js/pages/mystiDetail.js}"></script>
+
+</th:block>
+
+</html>

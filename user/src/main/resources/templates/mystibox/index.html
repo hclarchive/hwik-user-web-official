@@ -1,0 +1,175 @@
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<th:block layout:fragment="pageCss">
+</th:block>
+
+<th:block layout:fragment="content">
+    <div class="cont_outter">
+        <div class="cont_inner">
+            <h3 class="h-tit mb-3">Ongoing</h3>
+            <th:block th:if="${goingList.empty}">
+                <div class="box min_box mb-9 flex items-center justify-center">
+                    <div class="flex flex-col items-center">
+                        <img class="mb-3 w-10 connec_img" th:src="@{/assets/images/wallet.png}" alt="wallet">
+                        <p class="nomal_tm">No mistibox in progress.</p>
+                    </div>
+                </div>
+            </th:block>
+            <th:block th:unless="${goingList.empty}">
+                <div class="box min_box mb-9">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5" id="going_wrap">
+                        <th:block th:each="item, i :${goingList}">
+                            <div class="box_wrap flex flex-col cursor-pointer" th:data-mystibox-id="${item.id}">
+                                <div class="mytibox_col" th:style="|background: url('${item.imagePath}') no-repeat; background-size: cover; background-position:center|">
+                                    <div class="text">
+                                        <p class="coupon" th:text="${item.title}">-</p>
+                                    </div>
+                                    <p class="period" th:text="${item.startedAt} +' ~ ' + ${item.endedAt}">20230904 ~ 20230908</p>
+                                    <input type="hidden" name="startedAt" th:value="${item.startedAt}"/>
+                                    <input type="hidden" name="endedAt" th:value="${item.endedAt}"/>
+                                </div>
+                                <p class="title" th:if="${#strings.equals(item.status, 'Ing')}" th:text="'Apply ' + ${item.curEntryCount}"></p>
+                                <p class="title" th:unless="${#strings.equals(item.status, 'Ing')}" th:text="${item.status}"></p>
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
+            </th:block>
+            <div class="mb-9"></div>
+            <h3 class="h-tit mb-3">Ended</h3>
+            <th:block th:if="${endedList.empty}">
+                <div class="box min_box mb-9 flex items-center justify-center">
+                    <div class="flex flex-col items-center">
+                        <img class="mb-3 w-10 connec_img" th:src="@{/assets/images/wallet.png}" alt="wallet">
+                        <p class="nomal_tm">No mistibox in progress.</p>
+                    </div>
+                </div>
+            </th:block>
+            <th:block th:unless="${endedList.empty}">
+                <div class="box min_box mb-9">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5 mytibox_wrap_gray" id="ended_wrap">
+                        <th:block th:each="item, i :${endedList}">
+                            <div class="box_wrap flex flex-col cursor-pointer" th:data-mystibox-id="${item.id}">
+                                <div class="mytibox_col" th:style="|background: url('${item.imagePath}') no-repeat; background-size: cover; background-position:center|">
+                                    <div class="text">
+                                        <p class="coupon" th:text="${item.title}">-</p>
+                                    </div>
+                                    <p class="period" th:text="${item.startedAt} +' ~ ' + ${item.endedAt}">20230904 ~ 20230908</p>
+                                    <input type="hidden" name="startedAt" th:value="${item.startedAt}"/>
+                                    <input type="hidden" name="endedAt" th:value="${item.endedAt}"/>
+                                </div>
+                                <p class="title gray">Ended</p>
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
+            </th:block>
+
+            <div id="history_wrap" class="w-full" style="display: none">
+                <div class="tit_wrap flex justify-between mb-3">
+                    <h3 class="h-tit ">My History</h3>
+                </div>
+
+                <div class="overflow-scroll">
+                    <div class="rounded-md bg-white h-table">
+                        <div id="history_table" class="divide-y divide-slate-100">
+                            <div class="text-center py-10">
+                                Not Value
+                            </div>
+                        </div>
+                        <div id="pagenavigation" class="pagenavigation flex justify-end gap-6" style="min-width: 1000px">
+                            <button class="arrow_left" type="button" id="page_pre_btn"></button>
+                            <div class="page_number">
+                                <span id="page_cur">1</span>
+                                <span class="dash">/</span>
+                                <span id="page_total">1,000</span>
+                            </div>
+                            <button class="arrow_right" type="button" id="page_next_btn"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="coupon_modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+             class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="pop_bg">
+                <div class="pop_tit">
+                    <p>Confirmation of winning</p>
+                </div>
+                <div class="pop_body pop_body4 ">
+                    <img class="mb-5" th:src="@{/assets/images/layer_img07.png}">
+                    <p class="mb-12">
+                        Congratulations! <span>You're the winner!</span><br>
+                        Tpoint will be paid from the Taglo app<br/>
+                        with within one to three days.
+                    </p>
+
+                    <div class="btn_wrap">
+                        <button class="btn_primary" type="button" id="coupon_modal_close_btn">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: none">
+            <div id="history_row_template">
+                <div class="flex flex-row history-row">
+                    <div class="table_coupon basis-1/5 flex items-center justify-center">
+                        <div name="title">50,000 TPoint Coupon</div>
+                    </div>
+                    <div class="basis-1/5 flex items-center justify-center">
+                        <div>
+                            <p class="s_tit text-center">Period</p>
+                            <p class="date" name="date">20230904 ~ 20230910</p>
+                        </div>
+                    </div>
+                    <div class="basis-1/5 flex items-center justify-center">
+                        <div>
+                            <p class="s_tit text-right">Number of application</p>
+                            <p class="date text-right" name="apply">3/30</p>
+                        </div>
+                    </div>
+                    <div class="basis-2/5 flex items-center justify-center">
+                        <div class="basis-1/2  flex items-center justify-center">
+                            <button class="table_btn" name="summary-btn">
+                                You're the winner! Check the Coupon
+                            </button>
+                        </div>
+                        <div class="basis-1/2 flex items-center justify-end">
+                            <span class="arrow_tb down float-right m-4" style="width:1rem; height: 1rem" name="collapse_btn"></span></div>
+                    </div>
+                </div>
+                <div name="sub_row_wrap">
+                    <div class="flex flex-row history-row">
+                        <div class="basis-1/5 flex items-center justify-center font-semibold font-size-14">Status</div>
+                        <div class="basis-1/5 flex items-center justify-center font-semibold font-size-14">Category</div>
+                        <div class="basis-1/5 flex items-center justify-center font-semibold font-size-14">Total Amount</div>
+                        <div class="basis-1/5 flex items-center justify-center font-semibold font-size-14">Timestamp</div>
+                        <div class="basis-1/5 flex items-center justify-center font-semibold font-size-14">Tx</div>
+                    </div>
+                </div>
+            </div>
+            <div id="history_sub_row_template">
+                <div class="flex flex-row history-row">
+                    <div class="t_green basis-1/5 flex items-center justify-center font-size-12 font-medium" name="status">Succesed</div>
+                    <div class="basis-1/5 flex items-center justify-center font-size-12 font-medium" name="category">Apply</div>
+                    <div class="basis-1/5 flex items-center justify-center font-size-12 font-medium" name="amount">123.12 HWIK</div>
+                    <div class="basis-1/5 flex items-center justify-center font-size-12 font-medium" name="time">20230420 12:23</div>
+                    <div class="tx_ico basis-1/5 flex items-center justify-center " name="hash">
+                        <a class="font-size-12 font-medium" target="_blank"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="pageScript">
+    <script th:src="@{/assets/js/pages/mysti.js}"></script>
+
+</th:block>
+
+</html>

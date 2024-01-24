@@ -1,0 +1,314 @@
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<th:block layout:fragment="pageCss">
+        <meta property="og:title"
+              content="Hwik Circle Layer Quest" >
+    <link th:href="@{/assets/vendor/flowbite/flowbite.min.css}" rel="stylesheet"/>
+</th:block>
+
+<th:block layout:fragment="content">
+    <div class="cont_outter">
+        <div class="cont_inner xl:h-full">
+            <h3 class="h-tit mb-8">WEB3.0</h3>
+            <div class="quest_wrap grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5 mb-14" id="web3Wrap">
+                <th:block th:each="item, i: ${web3}">
+                    <!--/*WEB3.0 퀘스트 완료*/-->
+                    <th:block th:if="${item.isComplete}">
+                        <div class="quest_box web3Btn" th:attr="data-uuid=${item.uuid}">
+                            <div class="page" th:text="${item.currentWeb3} + '/' + ${item.web3Count}"></div>
+                            <img class="quest_ico" th:src="@{/assets/images/web_ico01.png}"/>
+                            <div class="quesr_title mb-4">
+                                <p th:text="${item.title}">Join the HCL</p>
+                                <p>Quest</p>
+                            </div>
+                            <div>
+                                <p class="state">Completed</p>
+                                <div class="price">
+                                    <span class="num"
+                                          th:text="${#numbers.formatDecimal(item.reward, 1, 'COMMA', 2, 'POINT')}">0</span>
+                                    <span class="unit">HWIK</span>
+                                </div>
+                            </div>
+                        </div>
+                    </th:block>
+                    <th:block th:unless="${item.isComplete}">
+                        <!--/* 하위 퀘스트 완료 */-->
+                        <th:block th:if="${item.web3Count == item.currentWeb3}">
+                            <div class="quest_box claimBtn"
+                                 th:attr="data-uuid=${item.uuid}, data-title=${item.title}, data-id=${item.id}, data-reward=${item.reward}, data-type='web3'">
+                                <div class="page" th:text="${item.currentWeb3} + '/' + ${item.web3Count}"></div>
+                                <img class="quest_ico" th:src="@{/assets/images/web_ico02.png}"/>
+                                <div class="quesr_title mb-4">
+                                    <p th:text="${item.title}">Join the HCL</p>
+                                    <p>Quest</p>
+                                </div>
+                                <div>
+                                    <p class="state primary">Claim</p>
+                                    <div class="price">
+                                        <span class="num"
+                                              th:text="${#numbers.formatDecimal(item.reward, 1, 'COMMA', 2, 'POINT')}">0</span>
+                                        <span class="unit">HWIK</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </th:block>
+                        <!--/* 하위 퀘스트 미완료 */-->
+                        <th:block th:unless="${item.web3Count == item.currentWeb3}">
+                            <div class="quest_box web3Btn" th:attr="data-uuid=${item.uuid}">
+                                <div class="page" th:text="${item.currentWeb3} + '/' + ${item.web3Count}"></div>
+                                <img class="quest_ico" th:src="@{/assets/images/web_ico02.png}"/>
+                                <div class="quesr_title mb-4">
+                                    <p th:text="${item.title}">Join the HCL</p>
+                                    <p>Quest</p>
+                                </div>
+                                <div>
+                                    <p class="state black">Get Reward</p>
+                                    <div class="price">
+                                        <span class="num"
+                                              th:text="${#numbers.formatDecimal(item.reward, 1, 'COMMA', 2, 'POINT')}">0</span>
+                                        <span class="unit">HWIK</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </th:block>
+                    </th:block>
+                </th:block>
+            </div>
+
+            <h3 class="h-tit mb-8">Quiz</h3>
+            <div class="quest_wrap grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+                <th:block th:each="item, i: ${quiz}">
+                    <th:block th:if="${item.isComplete}">
+                        <div class="quest_box">
+                            <img class="quest_ico" th:src="@{/assets/images/quiz_ico01.png}"/>
+                            <div class="quesr_title mb-4">
+                                <p th:text="${item.title}">Quiz title</p>
+                            </div>
+                            <div>
+                                <p class="state">Completed</p>
+                                <div class="price">
+                                    <span class="num"
+                                          th:text="${#numbers.formatDecimal(item.reward, 1, 'COMMA', 2, 'POINT')}">0</span>
+                                    <span class="unit">HWIK</span>
+                                </div>
+                            </div>
+                            <button class="action" type="button"></button>
+                        </div>
+                    </th:block>
+                    <th:block th:unless="${item.isComplete}">
+                        <th:block th:if="${item.questionCount == item.currentQuestion}">
+                            <div class="quest_box bg claimBtn"
+                                 th:attr="data-id=${item.id}, data-title=${item.title}, data-reward=${item.reward}, data-type='quiz'">
+                                <img class="quest_ico" th:src="@{/assets/images/quiz_ico02.png}"/>
+                                <div class="quesr_title mb-4">
+                                    <p th:text="${item.title}">Quiz title</p>
+                                </div>
+                                <div>
+                                    <p class="state primary">Claim</p>
+                                    <div class="price">
+                                        <span class="num"
+                                              th:text="${#numbers.formatDecimal(item.reward, 1, 'COMMA', 2, 'POINT')}">0</span>
+                                        <span class="unit">HWIK</span>
+                                    </div>
+                                </div>
+                                <button class="action on " type="button"></button>
+                            </div>
+                        </th:block>
+                        <th:block th:unless="${item.questionCount == item.currentQuestion}">
+                            <div class="quest_box quizBtn"
+                                 th:attr="data-id=${item.id}, data-title=${item.title}, data-reward=${item.reward}, data-type='quiz'">
+                                <img class="quest_ico" th:src="@{/assets/images/quiz_ico02.png}"/>
+                                <div class="page" th:text="${item.currentQuestion} + '/' + ${item.questionCount}"></div>
+                                <div class="quesr_title mb-4">
+                                    <p th:text="${item.title}">Quiz title</p>
+                                </div>
+                                <div>
+                                    <p class="state primary">Get Reward</p>
+                                    <div class="price">
+                                        <span class="num"
+                                              th:text="${#numbers.formatDecimal(item.reward, 1, 'COMMA', 2, 'POINT')}">0</span>
+                                        <span class="unit">HWIK</span>
+                                    </div>
+                                </div>
+                                <button class="action arrow " type="button"></button>
+                            </div>
+                        </th:block>
+                    </th:block>
+                </th:block>
+            </div>
+        </div>
+
+        <!-- quiz start modal -->
+        <div id="quizStartModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+             class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative w-full max-w-2xl max-h-full m-auto">
+                <div class="flex flex-col my-auto items-center">
+                    <!-- Modal content -->
+                    <div class="pop_bg">
+                        <div class="pop_tit">
+                            <p id="quizStartModalTitle">Quiz Title</p>
+                            <img class="pop_close" th:src="@{/assets/images/layer_close.png}" alt="Close"/>
+                        </div>
+                        <div class="pop_body">
+                            <img class="mb-5" th:src="@{/assets/images/layer_img01.gif}" alt="Welcome">
+                            <p class="body_tit mb-1">Welcome!</p>
+                            <p class="body_txt mb-12">
+                                You can receive a total of <span class="primary_tc font-bold text-lg"
+                                                                 id="quizStartModalReward">1,000</span> <span
+                                    class="primary_tc font-bold text-lg">HWIK</span>Tokens<br/>
+                                as rewards through this quiz.
+                            </p>
+                            <div class="btn_wrap">
+                                <button class="btn_start" type="button" id="quizStartModalStartBtn">start</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- quiz modal -->
+        <div id="quizModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+             class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative w-full max-w-2xl max-h-full m-auto">
+                <div class="flex flex-col my-auto items-center">
+                    <!-- Modal content -->
+                    <div class="pop_bg">
+                        <div class="pop_tit">
+                            <p id="quizModalTitle">Quiz Title</p>
+                            <img id="quizModalCloseBtn" class="pop_close" th:src="@{/assets/images/layer_close.png}" alt="닫기"/>
+                        </div>
+                        <div class="pop_body2">
+                            <div class="page_nav" id="quizModalNav">
+                            </div>
+                            <div class="text-lg font-medium my-6">
+                                <p class="font-bold" id="quizModalContent">HWIK CIRCILE project not offer?</p>
+                            </div>
+                            <form>
+                                <div class="grid grid-cols-1 gap-2 mb-12">
+                                    <div class="form_radio_btn">
+                                        <input type="radio" name="choice" value="" id="quizModalChoice1Input">
+                                        <label for="quizModalChoice1Input"
+                                               id="quizModalChoice1Label"><span>A</span>Bridge</label>
+                                    </div>
+                                    <div class="form_radio_btn">
+                                        <input type="radio" name="choice" value="" id="quizModalChoice2Input">
+                                        <label for="quizModalChoice2Input" id="quizModalChoice2Label"><span>B</span>Staking</label>
+                                    </div>
+                                    <div class="form_radio_btn">
+                                        <input type="radio" name="choice" value="" id="quizModalChoice3Input">
+                                        <label for="quizModalChoice3Input" id="quizModalChoice3Label"><span>C</span>Staking</label>
+                                    </div>
+                                    <div class="form_radio_btn">
+                                        <input type="radio" name="choice" value="" id="quizModalChoice4Input">
+                                        <label for="quizModalChoice4Input" id="quizModalChoice4Label"><span>D</span>Staking</label>
+                                    </div>
+                                </div>
+
+                                <div class="btn_wrap flex items-center justify-between">
+                                    <span></span>
+                                    <span class="primary_tc font-normal"
+                                          id="quizModalWrongSpan">The answer is wrong</span>
+                                    <button class="btn_gray" type="button" id="quizModalNextBtn">Next Step</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- quiz earn modal -->
+        <div id="quizEarnModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+             class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative w-full max-w-2xl max-h-full m-auto">
+                <div class="flex flex-col my-auto items-center">
+                    <!-- Modal content -->
+                    <div class="pop_bg">
+                        <div class="pop_tit">
+                            <p id="quizEarnModalTitle">GameFi: What’s HWIK CIRCLE?</p>
+                            <img class="pop_close" th:src="@{/assets/images/layer_close.png}" alt="닫기"/>
+                        </div>
+                        <div class="pop_body">
+                            <img class="mb-5" th:src="@{/assets/images/layer_img02.gif}" alt="웰컴">
+                            <p class="text-xl mb-1">You have earned!</p>
+                            <p class="body_tit primary_tc mb-12" id="quizEarnModalReward">
+                                0 HWIK
+                            </p>
+                            <div class="btn_wrap">
+                                <button class="btn_start" type="button" id="quizEarnModalRewardBtn">Receive Reward
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="progressModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+             class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="pop_bg">
+                <div class="pop_tit">
+                    <p>Reward in progress</p>
+                </div>
+                <div class="pop_body pop_body4">
+                    <img class="mb-5" th:src="@{/assets/images/layer_img04.gif}">
+                    </p>
+                    <p class="font-semibold">Transaction in progress.<br>
+                        Please wait a moment.</p>
+                </div>
+            </div>
+        </div>
+        <div id="successModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+             class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="pop_bg">
+                <div class="pop_tit">
+                    <p>Claim Confirmed</p>
+                </div>
+                <div class="pop_body pop_body4 ">
+                    <img class="mb-5" th:src="@{/assets/images/layer_img05.gif}">
+                    <p class="mb-12">Transaction Submitted<br>
+                        <a id="goExeplorer" target="_blank">
+                            <span class="underline primary_tc">View on Wemix explorer</span>
+                        </a>
+                    </p>
+
+                    <div class="btn_wrap">
+                        <button class="btn_primary" type="button" id="successModalCloseBtn">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="failModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+             class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="pop_bg">
+                <div class="pop_tit">
+                    <p>Failed</p>
+                </div>
+                <div class="pop_body pop_body4 ">
+                    <img class="mb-10" th:src="@{/assets/images/layer_img06.png}">
+                    <p class="mb-1">Transaction Failed</p>
+                    <p class="font-semibold mb-5">There may be a problem with the network situation.<br>
+                        Please try again in a few minutes.
+                    </p>
+
+                    <div class="btn_wrap">
+                        <button class="btn_primary" type="button" id="failModalCloseBtn">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="pageScript">
+    <script th:src="@{/assets/vendor/flowbite/flowbite.min.js}"></script>
+
+    <script th:src="@{/assets/js/pages/quest.js}"></script>
+
+</th:block>
+
+</html>

@@ -1,0 +1,39 @@
+
+app:
+  sns:
+    state-key: ""
+    twitter:
+      callback-url: ""
+      client-id: ""
+      client-secret: ""
+      consumer-api-key: ""
+      consumer-api-key-secret: ""
+    telegram:
+      bot-id: ""
+      bot-token: ""
+
+spring:
+  datasource:
+    url: ""
+    username: ""
+    password: ""
+    driver-class-name: ""
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+web3j:
+  token:
+    chain-id: 1111
+    client-address: https://api.wemix.com
+    explorer-address: https://explorer.wemix.com
+    contract-address: '0x7C79828adaA2af84F76558c80AF0D580d7F1A2e9'
+    symbol: 'HWIK'
+  mystibox:
+    wallet-in-address: ''
+    wallet-in-private-key: ''
+    wallet-out-address: ''
+    wallet-out-private-key: ''
+
+

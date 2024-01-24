@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="leftbarFragment" class="leftbar">
+    <img th:src="@{/assets/images/layer_close.png}" class="leftbar_close"/>
+
+    <div style="display: flex; padding: 20px">
+        <img th:src="@{/assets/images/logo.png}" style="width: 45px; height: 45px" alt="Logo"/>
+        <div style="margin-left: 20px">
+            <span style="line-height: 45px; color: #fff"></span>
+        </div>
+    </div>
+    <div class="menu_wrap">
+        <ul class="menu">
+            <li th:classappend="${menu} == 'my' ? 'active'">
+                <a th:href="@{/}">
+                    <img th:src="@{/assets/images/left_ico01.png}" alt="my info"/>
+                    <span>My Info</span>
+                </a>
+            </li>
+            <li th:classappend="${menu} == 'trade' ? 'active'">
+                <a th:href="@{/trade}">
+                    <img th:src="@{/assets/images/left_ico02.png}" alt="Trade"/>
+                    <span>Trade</span>
+                </a>
+            </li>
+            <li th:classappend="${menu} == 'staking' ? 'active'">
+                <a th:href="@{/staking}">
+                    <img th:src="@{/assets/images/left_ico03.png}" alt="staking"/>
+                    <span>Staking</span>
+                </a>
+            </li>
+            <li th:classappend="${menu} == 'quest' ? 'active'">
+                <a th:href="@{/quest}">
+                    <img th:src="@{/assets/images/left_ico04.png}" alt="Quest"/>
+                    <span>Quest</span>
+                </a>
+            </li>
+            <li th:classappend="${menu} == 'mysti' ? 'active'">
+                <a th:href="@{/mysti}">
+                    <img th:src="@{/assets/images/left_ico05.png}" alt="Mysibox"/>
+                    <span>MystiBox</span>
+                </a>
+            </li>
+        </ul>
+        <div class="leftbar_bottom">
+            <a href="https://hwikcircle.io/">
+                <button class="hom_btn" type="button">
+                    Homepage
+                </button>
+            </a>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

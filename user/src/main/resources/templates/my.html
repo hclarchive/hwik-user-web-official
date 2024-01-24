@@ -1,0 +1,416 @@
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<th:block layout:fragment="pageCss">
+</th:block>
+
+<th:block layout:fragment="content">
+    <div class="cont_inner">
+        <h3 class="h-tit mb-3">Wallet</h3>
+        <div class="box mb-9">
+            <div class="rows mb-5">
+                <h4 class="s-tit mb-2">Wallet Address</h4>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-9 lg:col-span-2">
+                    <div class="add_box_wrap">
+                        <div class="add_box" th:text="${#authentication.name}" id="addressBox">
+                            0x0000000000000000000000000000000000000000
+                        </div>
+                        <p class="copy_btn" id="copyBtn">Copied!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rows">
+                <div class="grid grid-cols-1 xl:grid-cols-2 gap-9 mb-2">
+                    <div class="cols">
+                        <h4 class="s-tit mb-2">Balance</h4>
+                        <div class="balance_rows flex items-center justify-between mb-4">
+                            <div class="flex gap-2">
+                                <img th:src="@{/assets/images/balance_ico02.png}"/>
+                                <span class=""></span>
+                            </div>
+                            <div class="price_box">
+                                <p class="text"><span data-bind-hcl></span> HCL</p>
+                                <p class="usd">=$</p>
+                            </div>
+                        </div>
+                        <div class="balance_rows flex items-center justify-between">
+                            <div class="flex gap-2">
+                                <img th:src="@{/assets/images/balance_ico01.png}"/>
+                            </div>
+                            <div class="price_box">
+                                <p class="text"><span data-bind-hwik></span> HWIK</p>
+                                <p class="usd">= Price cannot be indicated</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cols">
+                        <h4 class="s-tit mb-2">Price</h4>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="balance_rows flex items-center justify-between  col-span-2">
+                                <div class="flex gap-2">
+                                    <img th:src="@{/assets/images/balance_ico02.png}"/>
+                                </div>
+                                <div class="price_box">
+                                    <p class="text"><span data-bind-hcl></span> HCL</p>
+                                    <p class="usd">= Price cannot be indicated</p>
+                                </div>
+                            </div>
+                            <div class="balance_rows flex items-center justify-between col-span-2">
+                                <div class="flex gap-2">
+                                    <img th:src="@{/assets/images/balance_ico01.png}"/>
+                                    <span class=""></span>
+                                </div>
+                                <div class="price_box">
+                                    <p class="text"><span data-bind-hwik></span> HWIK</p>
+                                    <p class="usd">=$</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rows">
+                <div class="grid grid-cols-2 gap-9">
+
+                    <div class="rows_col gap-4">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tit_wrap flex justify-between mb-3">
+            <h3 class="h-tit ">Mystibox</h3>
+            <a th:href="@{/mysti}">
+                <button class="detail_btn" type="button">Details</button>
+            </a>
+        </div>
+        <div class="box min_box mb-9">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mytibox_wrap" id="mystiBoxListWrap">
+            </div>
+        </div>
+
+        <h3 class="h-tit mb-3">Transaction</h3>
+        <div class="table-reponsive">
+            <table class="h-table">
+                <thead>
+                <tr>
+                    <th class="rounded-ss-lg">Status</th>
+                    <th>Category</th>
+                    <th>Total Amount</th>
+                    <th>Timestamp</th>
+                    <th class="rounded-se-lg">Tx</th>
+                </tr>
+                </thead>
+                <tbody id="txBody">
+                <tr>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div role="status" class="max-w-sm animate-pulse">
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="pagenavigation flex justify-end gap-6">
+                <button class="arrow_left" type="button" id="txPreBtn"></button>
+                <div class="page_number">
+                    <span id="txCurPage">1</span>
+                    <span class="dash">/</span>
+                    <span id="txTotalPage">1,000</span>
+                </div>
+                <button class="arrow_right" type="button" id="txNextBtn"></button>
+            </div>
+        </div>
+    </div>
+    <div style="display: none">
+        <div id="mystiBoxItemTemplate">
+            <div class="box_wrap cursor-pointer">
+                <div class="mytibox_col">
+                    <div class="text">
+                        <p class="coupon" data-bind-title></p>
+                    </div>
+                    <p class="period">20230904 ~ 20230908</p>
+                    <input type="hidden" data-bind-startedAt/>
+                    <input type="hidden" data-bind-endedAt/>
+                </div>
+                <button type="button" class="title" data-bind-status></button>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="pageScript">
+    <script th:src="@{/assets/vendor/moment/min/moment.min.js}"></script>
+    <script th:src="@{/assets/js/pages/my.js}"></script>
+</th:block>
+
+</html>

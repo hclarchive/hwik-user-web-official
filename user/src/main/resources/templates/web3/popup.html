@@ -1,0 +1,13 @@
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<th:block layout:fragment="content">
+    <input type="hidden" id="url" th:value="${url}"/>
+</th:block>
+<th:block layout:fragment="pageScript">
+    <script th:src="@{/assets/js/pages/web3-popup.js}"></script>
+</th:block>
+
+</html>
